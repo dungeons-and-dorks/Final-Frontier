@@ -26,6 +26,8 @@ def get_space_data():
 
     # Fill missing values with 0
     df.mission_cost.fillna(0, inplace=True)
+    
+    df.pipe(get_country_name)
     return df
 
 
