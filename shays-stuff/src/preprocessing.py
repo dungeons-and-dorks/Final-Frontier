@@ -3,7 +3,9 @@ from sklearn.preprocessing import LabelEncoder
 
 
 def split_data(df):
-    train, test = train_test_split(df, test_size=0.2, random_state=123)
+    train, test = train_test_split(df, test_size=0.2, 
+                                   random_state=123,
+                                   stratify=df.mission_result)
     return train, test
 
 

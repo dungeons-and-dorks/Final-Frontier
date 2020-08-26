@@ -13,6 +13,9 @@ def get_space_data():
 
     # Fix the values within the rocket_status column
     df.pipe(fix_rocket_status)
+    
+    # Fix the values/type within mission_cost
+    df.pipe(fix_mission_cost)
 
     # Change the date column to a pandas datetime type
     df.date_time = pd.to_datetime(df.date_time)
@@ -40,8 +43,11 @@ def rename_columns(df):
     return df
 
 
-def change_data_types(df):
-    df.mission_cost.a
+def fix_mission_cost(df):
+    df.mission_cost = df.mission_cost.str.replace(' ', '')
+    df.mission_cost = df.mission_cost.str.replace(',', '')
+    df.mission_cost.astype(float)
+    return df
 
 
 def fix_rocket_status(df):
