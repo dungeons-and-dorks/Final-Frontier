@@ -54,3 +54,19 @@ def fix_rocket_status(df):
     df.loc[df.rocket_status == "StatusRetired", "rocket_status"] = "retired"
     df.loc[df.rocket_status == "StatusActive", "rocket_status"] = "active"
     return df
+
+def get_country_name(df):
+    """
+    Takes in the a dataframe and return the Country name in 
+    a new column
+    """
+    df['country'] = df['location'].str.split(', ').str[-1]
+    df['country'].loc[df['country'] == 'Shahrud Missile Test Site'] = "Iran"
+    df['country'].loc[df['country'] == 'New Mexico'] = 'United States of America'
+    df['country'].loc[df['country'] == 'Yellow Sea'] = "China"
+    df['country'].loc[df['country'] == 'Pacific Missile Range Facility'] = "United States of America"
+    df['country'].loc[df['country'] == 'Pacific Ocean'] = "United States of America"
+    df['country'].loc[df['country'] == 'Barents Sea'] = 'Russia'
+    df['country'].loc[df['country'] == 'Gran Canaria'] = 'United States of America'
+    df['country'].loc[df['country'] == 'USA'] = 'United States of America'
+    return df
