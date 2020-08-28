@@ -16,3 +16,14 @@ def encode_data(df):
         df[col] = encoder.fit_transform(df[col])
 
     return df
+
+def preprocesses_data_for_modeling(df):
+    # Split the data into train and test
+    train, test = split_data(df)
+    
+    # Encode train and test
+    for df in [train, test]:
+        df = df.pipe(encode_data)
+    
+    return train, test
+    
