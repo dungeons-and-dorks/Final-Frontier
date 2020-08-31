@@ -34,3 +34,21 @@ def ditro_plot_for_entire_df(df):
     for i, col in enumerate(df.columns):
         plt.figure(i)
         distro_plot_for_single_column(df, col)
+
+        
+def success_percent_by_country(df):
+    """
+    Takes in the space df and returns a table with the following by Country:
+    Failure
+    Partial Failure
+    Prelaunch Failure
+    Success
+    Succes in percent
+    """
+    table = pd.pivot_table(df, values='year', index='country',
+                    columns='mission_status', aggfunc='count', fill_value=0)
+    table['Success (in prc)'] = table['Success'] / table.sum(axis=1)
+    return table.style.format({'Success (in prc)' : '{:.2%}'})\
+               .background_gradient(cmap='Reds')\
+               .background_gradient(cmap='Greens',subset=["Success"])\
+               .background_gradient(cmap='Greens',subset=["Success (in prc)"])
