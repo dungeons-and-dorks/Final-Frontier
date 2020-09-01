@@ -21,7 +21,10 @@ def get_space_data():
     df.date_time = pd.to_datetime(df.date_time)
     
     # Create the year column
-    df['year'] = df.date_time.apply(lambda datetime: datetime.year)    
+    df['year'] = df.date_time.apply(lambda datetime: datetime.year)
+    
+    # Create the Month column
+    df['month'] = df.date_time.apply(lambda datetime: datetime.month)
 
     # Set the index to be the datetime column, then drop it from the dataframe
     df.set_index(df.date_time, inplace=True)
