@@ -34,6 +34,21 @@ def ditro_plot_for_entire_df(df):
     for i, col in enumerate(df.columns):
         plt.figure(i)
         distro_plot_for_single_column(df, col)
+        
+
+def mission_status_distro_plot(df):
+    """
+    Takes i the sapce dataframe and returns a
+    barplot for the number of launches for 
+    each Status mission
+    """
+    #ccreate a df that counts the missions for each status
+    df_1 = df["mission_status"].value_counts().reset_index()
+    
+    plt.figure("figure", figsize = (16,16))
+    sns.barplot(df_1["index"], df_1["mission_status"], color="#39FF14")
+    plt.title("Number of missions by Mission Status", fontsize = 14)
+        
 
         
 def success_percent_by_country(df):
