@@ -67,3 +67,36 @@ def success_percent_by_country(df):
                .background_gradient(cmap='Reds')\
                .background_gradient(cmap='Greens',subset=["Success"])\
                .background_gradient(cmap='Greens',subset=["Success (in prc)"])
+
+
+
+def plot_rocket_type_and_status_by_company(df):
+    """
+    Takes in the space df and groups data into active and retired
+    return 2 barplots:
+    1. Number of Active Rocket Types for each Company
+    2. Number of Retired Rocket Types for each Company    
+    """
+    
+    #Group and split the data
+    cmp = df.groupby(["company_name", "rocket_status"]).count()["rocket_type"].reset_index()
+    active = cmp[cmp["rocket_status"] == "active"].sort_values("rocket_type")
+    retired = cmp[cmp["rocket_status"] != "active"].sort_values("rocket_type")
+    
+    #Set the figure size for Active barplot
+    plt.figure(figsize=(16,16))
+    
+    #Active Barplot
+    chart = sns.barplot(x=active.company_name, y=active.rocket_type, color="green")
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=90)
+    plt.title("Number of Active Rocket Types for each Company", fontsize = 14)
+    
+    #Set the figure size for Retired barplot
+    plt.figure(figsize=(16,16))
+    
+    #Retired Barplot
+    chart1 = sns.barplot(x=retired.company_name, y=retired.rocket_type, color="red")
+    chart1.set_xticklabels(chart1.get_xticklabels(), rotation=90)
+    plt.title("Number of Retired Rocket Types for each Company", fontsize = 14)
+
+    plt.show()
