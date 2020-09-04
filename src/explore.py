@@ -119,3 +119,22 @@ def plot_number_of_launches_per_company(df):
     sns.barplot(x = company_numbers.number_of_launches, y = company_numbers.company_name, color = "#39FF14")
     plt.title("Number of Launches per Company")
     plt.show()
+
+    
+def distribution_of_rocket_cost(df):
+    """
+    Takes in the space df and returns a distribution
+    plot for mission costs. All values at zero have been 
+    dropped as these did not have values to begin with.
+    """
+    #drop all values that are zero
+    not_zero = df[df.mission_cost != 0]
+    
+    #make values into the millions
+    not_zero.mission_cost = not_zero.mission_cost * 1000000
+    
+    #create the plot
+    plt.figure(figsize = (16,16))
+    sns.distplot(not_zero.mission_cost, kde = False, bins = 100, color = "#39FF14")
+    plt.title("Distribution of Mission Cost - in Millions")
+    plt.show()
