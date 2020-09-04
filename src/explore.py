@@ -98,5 +98,24 @@ def plot_rocket_type_and_status_by_company(df):
     chart1 = sns.barplot(x=retired.company_name, y=retired.rocket_type, color="red")
     chart1.set_xticklabels(chart1.get_xticklabels(), rotation=90)
     plt.title("Number of Retired Rocket Types for each Company", fontsize = 14)
-
+    plt.show()
+    
+    
+def plot_number_of_launches_per_company(df):
+    """
+    Takes in the space df and returns a
+    bar plot thay shows the number of
+    launches for each company in the data
+    """
+    
+    #create a dataframe counting the number of times each company appears in a row
+    company_numbers = df["company_name"].value_counts().reset_index()
+    
+    #rename the columns to mathc what they represent
+    company_numbers.columns = ["company_name", "number_of_launches"]
+    
+    #create the barplot
+    plt.figure(figsize=(16,24))
+    sns.barplot(x = company_numbers.number_of_launches, y = company_numbers.company_name, color = "#39FF14")
+    plt.title("Number of Launches per Company")
     plt.show()
