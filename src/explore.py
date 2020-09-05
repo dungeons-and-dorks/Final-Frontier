@@ -138,3 +138,22 @@ def distribution_of_rocket_cost(df):
     sns.distplot(not_zero.mission_cost, kde = False, bins = 100, color = "#39FF14")
     plt.title("Distribution of Mission Cost - in Millions")
     plt.show()
+    
+
+def plot_yearly_distro(df):
+    """
+    Takes in the space df and returns
+    a bar chart distribution for the 
+    number of missions for every year since 1957
+    """
+    
+    #create subset df
+    year_df = df["year"].value_counts().reset_index()
+    year_df.columns = ["year", "count"]
+
+    #create plot
+    plt.figure(figsize=(16,16))
+    chart = sns.barplot(x=year_df["year"], y= year_df["count"], color = "#39FF14")
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=90, fontsize= 12)
+    plt.title("Number of Missions by Year", fontsize = 14)
+    plt.show()
