@@ -157,3 +157,21 @@ def plot_yearly_distro(df):
     chart.set_xticklabels(chart.get_xticklabels(), rotation=90, fontsize= 12)
     plt.title("Number of Missions by Year", fontsize = 14)
     plt.show()
+    
+    
+def plot_monthly_distro(df):
+    """
+    Takes in the space df and returns
+    a bar chart distribution for the 
+    number of missions during each month 
+    """
+    # create df counting how many missions by month
+    monthly_df = df["month"].value_counts().reset_index()
+    monthly_df.columns = ["month", "count"]
+    
+    # create plot
+    plt.figure(figsize= (16,16))
+    chart = sns.barplot(x = monthly_df["month"], y = monthly_df["count"], color = "#39FF14")
+    chart.set_xticklabels(chart.get_xticklabels(), fontsize= 12)
+    plt.title("Number of Missions by Month", fontsize = 14)
+    plt.show()
