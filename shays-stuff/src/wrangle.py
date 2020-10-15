@@ -19,6 +19,12 @@ def get_space_data():
 
     # Change the date column to a pandas datetime type
     df.date_time = pd.to_datetime(df.date_time)
+    
+    # Create the year column
+    df['year'] = df.date_time.apply(lambda datetime: datetime.year)
+    
+    # Create the Month column
+    df['month'] = df.date_time.apply(lambda datetime: datetime.month)
 
     # Set the index to be the datetime column, then drop it from the dataframe
     df.set_index(df.date_time, inplace=True)
@@ -26,6 +32,8 @@ def get_space_data():
 
     # Fill missing values with 0
     df.mission_cost.fillna(0, inplace=True)
+    
+    df.pipe(get_country_name)
     return df
 
 
@@ -53,4 +61,20 @@ def fix_mission_cost(df):
 def fix_rocket_status(df):
     df.loc[df.rocket_status == "StatusRetired", "rocket_status"] = "retired"
     df.loc[df.rocket_status == "StatusActive", "rocket_status"] = "active"
+    return df
+
+def get_country_name(df):
+    """
+    Takes in the a dataframe and return the Country name in 
+    a new column
+    """
+    df['country'] = df['location'].str.split(', ').str[-1]
+    df['country'].loc[df['country'] == 'Shahrud Missile Test Site'] = "Iran"
+    df['country'].loc[df['country'] == 'New Mexico'] = 'United States of America'
+    df['country'].loc[df['country'] == 'Yellow Sea'] = "China"
+    df['country'].loc[df['country'] == 'Pacific Missile Range Facility'] = "United States of America"
+    df['country'].loc[df['country'] == 'Pacific Ocean'] = "United States of America"
+    df['country'].loc[df['country'] == 'Barents Sea'] = 'Russia'
+    df['country'].loc[df['country'] == 'Gran Canaria'] = 'United States of America'
+    df['country'].loc[df['country'] == 'USA'] = 'United States of America'
     return df
